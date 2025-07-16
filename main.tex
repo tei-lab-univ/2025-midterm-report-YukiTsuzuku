@@ -1,14 +1,10 @@
 \documentclass[11pt]{jarticle} 
 
-% 絶体に必要なおまじない
-% %文字以降はコメントとして無視される
-% 11pt は標準の文字の大きさの指定
-% 10pt とすれば小さく、12pt とすれば大きくなる
-
 \usepackage[dvipdfmx]{graphicx} % 画像を使うためのパッケージ
 \usepackage{amsmath, amsfonts} % 数式を使うためのパッケージ
 \usepackage{bm} % 太字の数式を使う
 \usepackage{fancyhdr}
+\usepackage{wrapfig} %図に対して文章をを回り込ませるfigure
 
 \setlength{\oddsidemargin}{-10mm} % 紙の左のマージン
 \setlength{\evensidemargin}{-10mm} % 紙の右のマージン
@@ -17,9 +13,9 @@
 \setlength{\topmargin}{-15mm} % 紙の上のマージン
 \setlength{\textheight}{255mm} % テキストの高さ
 
-\lhead{東京科学大学 中間報告書} %ヘッダ左
+\lhead{東京科学大学 卒業論文中間報告書} %ヘッダ左
 \chead{\empty} %ヘッダ中央
-\rhead{2025年8月1日提出} %ヘッダ右．コンパイルした日付を表示
+\rhead{提出日：2025年8月1日} %ヘッダ右．コンパイルした日付を表示
 \lfoot{\empty} %フッタ左
 \cfoot{\thepage} %フッタ中央．ページ番号を表示
 \rfoot{\empty} %フッタ右
@@ -28,6 +24,9 @@
 
 % ここから本文
 \begin{document}
+
+% --------------------------------------------------------
+
 \title{研究題目}
 \title{比較情報を考慮した効率的な制御戦略の合成に関する研究}
 \author{都竹 佑季 (22B30490) \;\; 指導教員：鄭 顕志}
@@ -35,13 +34,15 @@
 \maketitle % 上で指定した title と authorを出力
 \thispagestyle{fancy}
 
+% --------------------------------------------------------
+
 \section{概要} % \section, \subsection, \subsubsection
 離散事象システムの制御において,動作コストを最小化する制御器(制御戦略)の合成は重要である.
 従来の制御戦略の合成手法は,制御戦略を合成するために中間生成物を経由しており計算空間の無駄が生じるという課題が存在する.
 本研究では,この課題を解決するため,全体モデルを構築せずに制御器を合成する手法であるDirected Discrete Controller Synthesis (DDCS)\cite{ddcs}を拡張する.
 具体的には,コストの比較情報を考慮した新たなヒューリスティックを導入して, 制御戦略を直接合成する手法を提案する.
 
-\section{研究背景（既存研究）}
+\section{離散制御器合成を用いた制御戦略設計}
 % 離散事象システム
 イベントの発生により状態が離散的に遷移するシステムを離散事象システムと呼ぶ. 離散事象システムは状態遷移図を用いてモデル化される.
 
@@ -51,7 +52,9 @@
 % 制御戦略
 そこで, 比較情報をもとに制御器からコストが低くなるような動作を抽出する. 抽出して生成されたものを制御戦略と呼ぶことにする.制御戦略に基づいてシステムを動かせば, 自動的にコストが最小化された動作になる.
 
-\section{既存研究における課題}
+% --------------------------------------------------------
+
+\section{従来の制御戦略合成における課題}
 従来の制御戦略の合成手順\cite{eze}は以下の通りである.
 \begin{enumerate}
     \item 各モデルを並列合成して,あり得る状態を全て構築した全体モデルを合成する.
@@ -60,28 +63,40 @@
 \end{enumerate}
 この方法では, 各環境モデルから制御戦略を生成するまでに中間の全体モデルを経由している. この中間生成物が計算空間の無駄となっていることが課題である.
 
+% --------------------------------------------------------
+
 \section{提案手法}
 本研究ではDirected Descrete Controller Synthesis(DDCS)\cite{ddcs}を拡張して,比較情報を考慮した探索を行う新たなDDCSを作り解決を試みる.
 DDCSは初期状態を始めとして状態を一個ずつ追加して制御器を構築していく手法である. どの状態を追加していくべきかをヒューリスティックに基づいて決定し,可能な限り早くMarking Action(Marking State)に到達できるようにする. 従来手法と異なり全体モデルを経由せず直接制御器を構築できるため必要主記憶容量を削減できる. ただし, 通常のDDCSでは比較情報が考慮されておらず全体としてコストが高い制御器が生成される可能性がある. そこで本研究で比較情報を考慮したヒューリスティックを用いた新たなDDCSを作り, 直接制御戦略を合成することを目指す.
 
-\section{研究計画}
-本研究の今後のスケジュール:\\
-2025年7月-8月: ヒューリスティックを考案し実装, 実験 \\
-2025年9月: 論文執筆
+% --------------------------------------------------------
 
-\appendix % Appendix はこのようにして始まる
+\section{研究計画}
+現在までに，提案手法の実装は概ね完了している．
+今後は，8月中に本手法の有効性を検証するための評価実験を実施する予定である．
+評価結果をもとに，9月にはソフトウェア工学分野の研究会であるSIG-KBSEへの論文投稿を目指す．
+論文が採択された場合，11月に開催される同研究会において研究成果の発表を行う．
+12月から翌年1月にかけては，これまでの研究内容を取りまとめ，卒業論文の執筆を進める計画である．
+
+% --------------------------------------------------------
+
 \begin{thebibliography}{99} % 文献リスト一覧はこんな風に始める
+{\footnotesize
+
 \bibitem{eze} % bibitem でラベルを付けて
- E. Castellano, V. Braberman, N. D'Ippolito, S. Uchitel, and K. Tei, % 内容 (著者等) を記載
-{\it \LaTeX : Minimising
-Makespan of Discrete Controllers: A Qualitative Approach},
+E. Castellano, V. Braberman, N. D'Ippolito, S. Uchitel, and K. Tei, 
+Minimising Makespan of Discrete Controllers: A Qualitative Approach,
 in 2019 IEEE 58th
 Conference on Decision and Control (CDC), Nice, France, 2019, pp. 1068-1075..
+
 \bibitem{ddcs} % bibitem でラベルを付けて
 D. Ciolek, M. Duran, F. Zanollo, N. Pazos, J. Braier, V. Braberman, N. D'Ippolito, and S.
-Uchitel, % 内容 (著者等) を記載
-{\it \LaTeX : On-the-fly informed search of non-blocking directed controllers},
+Uchitel, On-the-fly informed search of non-blocking directed controllers,
 Automatica, vol. 147, No. C (2023).
 
+}
 \end{thebibliography} % 文献リストの最後に必要
+
+% --------------------------------------------------------
+
 \end{document} % 最後の締めくくり.絶体必要
