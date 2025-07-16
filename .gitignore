@@ -8,6 +8,7 @@
 *.rar
 
 # Tex Files
+*.fls
 *.pls
 *.aux
 *.bbl
